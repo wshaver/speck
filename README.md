@@ -1,7 +1,7 @@
 speck
 =====
 
-A set of utility functions for easily rendering dust javascript templates in a backbone project with requirejs. I wrote this because I wanted to use linked-in's dustjs on a project and didn't like to repeat the compilation and rendering syntax over and over.
+A set of utility functions for easily rendering dust javascript templates in a backbone project with requirejs. I wrote this because I wanted to use linked-in's dustjs on a project and didn't like to repeat the compilation and rendering syntax over and over. 
 
 A basic usage, given that your model has properties referenced in the dust file:
 ###dust file:
@@ -44,7 +44,13 @@ define(['backbone', 'speck!./userList'], function(Backbone, speck){
 ```
 
 ## Requirements
-The code is designed for use in backbone, but could be used in other projects. It depends on requirejs, and assumes you have 'dustjs-linkedin' path and shim defined in your requirejs constructor:
+
+* Requirejs: http://requirejs.org/
+* Text plugin: http://requirejs.org/docs/download.html#text
+* linkedin djustjs: https://github.com/linkedin/dustjs/
+* Backbone (optional, but designed to use with): http://backbonejs.org/
+
+The code assumes you have 'dustjs-linkedin' path and shim defined in your requirejs constructor:
 
 ```javascript
 require.config({
