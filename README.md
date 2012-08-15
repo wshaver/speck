@@ -1,7 +1,7 @@
 speck
 =====
 
-A set of utility functions for easily rendering dust javascript templates in a backbone project with requirejs. 
+A set of utility functions for easily rendering dust javascript templates in a backbone project with requirejs. I wrote this because I wanted to use linked-in's dustjs on a project and didn't like to repeat the compilation and rendering syntax over and over.
 
 A basic usage, given that your model has properties referenced in the dust file:
 ###dust file:
