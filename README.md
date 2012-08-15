@@ -4,7 +4,7 @@ speck
 A set of utility functions for easily rendering dust javascript templates in a backbone project with requirejs. 
 
 A basic usage, given that your model has properties referenced in the dust file:
-#dust:
+###dust file:
 ```html
 <h1>Friends of {name}</h1>
 <ul>
@@ -14,12 +14,12 @@ A basic usage, given that your model has properties referenced in the dust file:
 </ul>
 ```
 
-#model:
+###your model:
 ```javascript
 new UserModel({name:'Bob', id:444, friends: [{name:'Joe'},{name:'Alex'}]});
 ```
 
-#view
+###a simple model based view
 ```javascript
 define(['backbone', 'speck!./user'], function(Backbone, speck){
 	return Backbone.View.extend({
@@ -32,7 +32,7 @@ define(['backbone', 'speck!./user'], function(Backbone, speck){
 
 If your view's model is a collection you'll need to pass in a collection name to dust:
 
-#userListView
+###a list based view
 ```javascript
 define(['backbone', 'speck!./userList'], function(Backbone, speck){
 	return Backbone.View.extend({
@@ -43,7 +43,8 @@ define(['backbone', 'speck!./userList'], function(Backbone, speck){
 });
 ```
 
-The plugin assumes you have 'dustjs-linkedin' path and shim defined in your requirejs constructor:
+## Requirements
+The code is designed for use in backbone, but could be used in other projects. It depends on requirejs, and assumes you have 'dustjs-linkedin' path and shim defined in your requirejs constructor:
 
 ```javascript
 require.config({
