@@ -5,12 +5,14 @@ A set of utility functions for easily rendering dust javascript templates in a b
 
 A basic usage, given that your model has properties referenced in the dust file:
 #dust:
+```html
 <h1>Friends of {name}</h1>
 <ul>
 {#friends}
  <li>{name}</li>
 {/friends}
 </ul>
+```
 
 #model:
 ```javascript
