@@ -13,9 +13,12 @@ A basic usage, given that your model has properties referenced in the dust file:
 </ul>
 
 #model:
+```javascript
 new UserModel({name:'Bob', id:444, friends: [{name:'Joe'},{name:'Alex'}]});
+```
 
 #view
+```javascript
 define(['backbone', 'speck!./user'], function(Backbone, speck){
 	return Backbone.View.extend({
 		render: function(){
@@ -23,10 +26,12 @@ define(['backbone', 'speck!./user'], function(Backbone, speck){
 		}
 	});
 });
+```
 
 If your view's model is a collection you'll need to pass in a collection name to dust:
 
 #userListView
+```javascript
 define(['backbone', 'speck!./userList'], function(Backbone, speck){
 	return Backbone.View.extend({
 		render: function(){
@@ -34,9 +39,11 @@ define(['backbone', 'speck!./userList'], function(Backbone, speck){
 		}
 	});
 });
+```
 
 The plugin assumes you have 'dustjs-linkedin' path and shim defined in your requirejs constructor:
 
+```javascript
 require.config({
 	paths: {
 		'dustjs-linkedin': '../libs/dust'
@@ -50,3 +57,4 @@ require.config({
 		}
 	}
 });
+```
