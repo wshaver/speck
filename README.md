@@ -55,7 +55,10 @@ The code assumes you have 'dustjs-linkedin' path and shim defined in your requir
 ```javascript
 require.config({
 	paths: {
-		'dustjs-linkedin': '../libs/dust'
+		//change to wherever your files are stored
+		'dustjs-linkedin': '../libs/dust', 
+		text: '../libs/text',
+		speck: '../libs/speck'
 	},
 	shim: {
 		'dustjs-linkedin': {
