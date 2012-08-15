@@ -30,19 +30,6 @@ define(['backbone', 'speck!./user'], function(Backbone, speck){
 });
 ```
 
-If your view's model is a collection you'll need to pass in a collection name to dust:
-
-###a list based view
-```javascript
-define(['backbone', 'speck!./userList'], function(Backbone, speck){
-	return Backbone.View.extend({
-		render: function(){
-			speck.html({users: this.model}, this.$el);
-		}
-	});
-});
-```
-
 ## Requirements
 
 * Requirejs: http://requirejs.org/
