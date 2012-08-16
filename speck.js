@@ -13,22 +13,29 @@ define(['text', 'dustjs-linkedin'], function(text, dust) {
 						}
 						return JSON.parse(JSON.stringify(obj));
 					};
+				var render = function(element, obj){
+					dust.render.call(dust, name, obj, function(err, out) {
+						if (err) {
+							throw err;
+						}
+						if (!('jquery' in element)) {
+							element = $(element);
+						}
+						element.html(out);
+					});
+				};
 				var out = {
 					render: function(obj, callback) {
-						obj = normalizeObject(obj);
-						dust.render.call(this, name, obj, callback);
+						dust.render.call(dust, name, obj, callback);
 					},
 					html: function(element, obj) {
-						obj = normalizeObject(obj);
-						dust.render.call(this, name, obj, function(err, out) {
-							if (err) {
-								throw err;
-							}
-							if (!('jquery' in element)) {
-								element = $(element);
-							}
-							element.html(out);
-						});
+						render(element, obj);
+					},
+					view: function(view){
+						var obj = normalizeObject(view.model);
+						var context = dust.makeBase(view);
+						var instance = context.push(obj);
+						render(view.$el, instance);
 					},
 					name: name,
 					compiled: compiled
