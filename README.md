@@ -3,7 +3,8 @@ speck
 
 A set of utility functions for easily rendering linkedin-dust javascript templates in a backbone project with requirejs. 
 
-A basic usage, given that your model has properties referenced in the dust file:
+##basic usage
+
 ###dust file:
 ```html
 <h1>Friends of {name}</h1>
@@ -24,10 +25,49 @@ new UserModel({name:'Bob', id:444, friends: [{name:'Joe'},{name:'Alex'}]});
 define(['backbone', 'speck!./user'], function(Backbone, speck){
 	return Backbone.View.extend({
 		render: function(){
-			speck.html(this.model, this.$el);
+			speck.view(this); //uses this.model and this.$el
 		}
 	});
 });
+```
+
+##advanced usage - view as context
+
+###dust file:
+```html
+<h1>Friends of {getName}</h1>
+```
+
+### No-model view
+```javascript
+define(['backbone', 'speck!./user'], function(Backbone, speck){
+	return Backbone.View.extend({
+		render: function(){
+			speck.view(this); //uses this.model and this.$el
+		}, 
+		//the view is in the template's context so it will call this function
+		getName: function(){
+			return "Bob";
+		}
+	});
+});
+```
+
+
+##other functions:
+
+```javascript
+//render the dust template to the element using the provided context
+speck.html(element, objectContext); 
+
+//render the dust template and then callback with the standard dustjs callback
+speck.render(objectContext, element);
+
+//get the name of the dust object
+speck.name;
+
+//get the compiled speck source
+speck.compiled;
 ```
 
 ## Requirements
