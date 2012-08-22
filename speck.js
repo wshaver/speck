@@ -1,6 +1,10 @@
-define(['text', 'dustjs-linkedin'], function(text, dust) {
+define(['module', 'text', 'dustjs-linkedin'], function(module, text, dust) {
+	var masterConfig = module.config();
 	return {
 		load: function(name, req, onLoad, config) {
+			if(masterConfig && 'speckUrl' in masterConfig && name[0] !== '.'){
+				name = masterConfig.speckUrl + name;
+			}
 			if (name.indexOf('.dust', name.length - 5) === -1) {
 				name = name + '.dust';
 			}
