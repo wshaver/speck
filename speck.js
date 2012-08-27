@@ -1,4 +1,4 @@
-define(['module', 'text', 'dustjs-linkedin'], function(module, text, dust) {
+define(['backbone', 'module', 'text', 'dustjs-linkedin'], function(Backbone, module, text, dust) {
 	var masterConfig = module.config();
 	return {
 		load: function(name, req, onLoad, config) {
@@ -22,8 +22,8 @@ define(['module', 'text', 'dustjs-linkedin'], function(module, text, dust) {
 						if (err) {
 							throw err;
 						}
-						if (!('jquery' in element)) {
-							element = $(element);
+						if(!('jquery' in element)) {
+							element = Backbone.$(element);
 						}
 						element.html(out);
 					});
