@@ -18,28 +18,32 @@ define(['backbone', 'module', 'text', 'dustjs-linkedin'], function(Backbone, mod
 						return JSON.parse(JSON.stringify(obj));
 					};
 				var render = function(element, obj){
+					var ret = Backbone.$.Deferred();
 					dust.render.call(dust, name, obj, function(err, out) {
 						if (err) {
+							ret.reject(err);
 							throw err;
 						}
 						if(!('jquery' in element)) {
 							element = Backbone.$(element);
 						}
 						element.html(out);
+						ret.resolve(out);
 					});
+					return ret;
 				};
 				var out = {
 					render: function(obj, callback) {
 						dust.render.call(dust, name, obj, callback);
 					},
 					html: function(element, obj) {
-						render(element, obj);
+						return render(element, obj);
 					},
 					view: function(view){
 						var obj = normalizeObject(view.model);
 						var context = dust.makeBase(view);
 						var instance = context.push(obj);
-						render(view.$el, instance);
+						return render(view.$el, instance);
 					},
 					name: name,
 					compiled: compiled
