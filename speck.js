@@ -2,13 +2,14 @@ define(['backbone', 'module', 'text', 'dustjs-linkedin'], function(Backbone, mod
 	var masterConfig = module.config();
 	return {
 		load: function(name, req, onLoad, config) {
-			if(masterConfig && 'speckUrl' in masterConfig && name[0] !== '.'){
-				name = masterConfig.speckUrl + name;
+			var url = name;
+			if(masterConfig && 'speckUrl' in masterConfig && url[0] !== '.'){
+				url = masterConfig.speckUrl + url;
 			}
-			if (name.indexOf('.dust', name.length - 5) === -1) {
-				name = name + '.dust';
+			if (url.indexOf('.dust', url.length - 5) === -1) {
+				url = url + '.dust';
 			}
-			text.get(req.toUrl(name), function(data) {
+			text.get(req.toUrl(url), function(data) {
 				var compiled = dust.compile(data, name);
 				dust.loadSource(compiled);
 				var normalizeObject = function(obj) {
@@ -54,6 +55,7 @@ define(['backbone', 'module', 'text', 'dustjs-linkedin'], function(Backbone, mod
 						}
 						return render(view.$el, instance);
 					},
+					url: url,
 					name: name,
 					compiled: compiled
 				};

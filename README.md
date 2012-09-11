@@ -31,14 +31,14 @@ define(['backbone', 'speck!./user'], function(Backbone, speck){
 });
 ```
 
-##advanced usage - view as context
+##Backbone Views as context
 
 ###dust file:
 ```html
 <h1>Friends of {getName}</h1>
 ```
 
-### No-model view
+### A view with a member for the template
 ```javascript
 define(['backbone', 'speck!./user'], function(Backbone, speck){
 	return Backbone.View.extend({
@@ -53,18 +53,82 @@ define(['backbone', 'speck!./user'], function(Backbone, speck){
 });
 ```
 
+##Replace the DOM element in your backbone view
+###dust file:
+```html
+<li class="large">{name}</li>
+```
 
-##other functions:
+###A list item view
+```javascript
+define(['backbone', 'speck!./userList'], function(Backbone, speck){
+	return Backbone.View.extend({
+		render: function(){
+			//The second boolean parameter means the default 
+			//"div" element will be replaced with the template contents.
+			speck.view(this, true); 
+		}		
+	});
+});
+```
+
+##run code after render completes
+###dust file:
+```html
+<li class="large">{getAjaxName}</li>
+```
+
+###A list item view with delayed rendering
+```javascript
+define(['backbone', 'speck!./userList'], function(Backbone, speck){
+	return Backbone.View.extend({
+		render: function(){
+			//The second boolean parameter means the default 
+			//"div" element will be replaced with the template contents.
+			speck.view(this, true).done(function(){
+				//this uses jquery deferreds, so .done, .finally, and .then all work.
+				
+				//the dom elements are done rendering here.
+				var existsNow = $('.large'); 
+			});
+			var doesNotExistYet = $('.large'); //it won't be in the dom here yet
+		},
+		someText:function(chunk, context, bodies){
+			return chunk.map(function(chunk) {
+				//assume some ajax call here instead of just setTimeout
+				setTimeout(function() {
+					chunk.end("Async"); //tells dust we're done with this chunk
+				},1000);
+			});
+		}
+	});
+});
+```
+
+
+##Full API
 
 ```javascript
-//render the dust template to the element using the provided context
-speck.html(element, objectContext); 
-
 //render the dust template and then callback with the standard dustjs callback
+//returns undefined
 speck.render(objectContext, element);
 
-//get the name of the dust object
+//render the dust template to the element using the provided context
+//returns a deferred that is resolved when rendering is complete
+speck.html(element, objectContext); 
+
+//render the dust template using the model and view as context
+//optionally replace the existing $el of the view with the contents 
+//of the rendered template
+speck.view(backboneViewInstance, [replace=false])
+
+//get the name of the dust object as it was passed in
+//this is the name that dust uses to register the template, and can 
+//be used by other templates for partials
 speck.name;
+
+//get the resolved url of the dust object
+speck.url
 
 //get the compiled speck source
 speck.compiled;
