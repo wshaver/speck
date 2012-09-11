@@ -39,10 +39,19 @@ define(['backbone', 'module', 'text', 'dustjs-linkedin'], function(Backbone, mod
 					html: function(element, obj) {
 						return render(element, obj);
 					},
-					view: function(view){
+					view: function(view, replace){
 						var obj = normalizeObject(view.model);
 						var context = dust.makeBase(view);
 						var instance = context.push(obj);
+						if(replace) {
+							var old = view.$el;
+							return render(view.$el, instance).done(function(){
+								var content = view.$el.contents();
+								//put it in the correct place in the dom:
+								view.$el.replaceWith(content);
+								view.setElement(content);
+							});
+						}
 						return render(view.$el, instance);
 					},
 					name: name,
